@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a Next.js 15 demo showing different ways to load external images.
 
 ## Getting Started
 
@@ -6,15 +6,38 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
+
+## Routes
+
+- `/images`: Demo page with multiple methods
+
+## Methods shown
+
+- next/image with `remotePatterns` configured in `next.config.ts`
+- next/image with `unoptimized`
+- Plain `<img />` (no optimization)
+- Proxy API route at `src/app/api/image-proxy/route.ts` to bypass CORS/hotlinking
+
+## Configure external hosts
+
+Edit `next.config.ts` → `images.remotePatterns` to add domains you need.
+
+```ts
+images: {
+  remotePatterns: [
+    { protocol: "https", hostname: "images.unsplash.com" },
+    { protocol: "https", hostname: "picsum.photos" }
+  ]
+}
+```
+
+## Notes
+
+- Some hosts block hotlinking or require specific headers. If images don’t render via direct URL, try the proxy method.
+- The proxy is for demo only. Add rate limiting, validation, and security checks for production.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
